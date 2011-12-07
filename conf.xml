@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config>
-    <sys>
-    </sys>
+<gpl-vote>
     <net>
+        <limits>
+            <total max="100" required="5"/>
+            <friends max="0" required="3"/>
+        </limits>
+        <servers>
+            <server host="0.0.0.0" port="0"/>
+            <server host="0.0.0.0" port="443" crt="crt" key="key"/>
+        </servers>
+        <friends ip="friend/ip.db" key="friend/key.db" hashid="friend/hashid.db"/>
     </net>
-</config>
+    <core>
+    </core>
+</gpl-vote>
 
