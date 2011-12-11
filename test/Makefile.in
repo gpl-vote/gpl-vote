@@ -1,0 +1,13 @@
+.PHONY: clean
+
+BUILD=hash
+CXXFLAGS+=-I.. @LIBGCRYPT_CFLAGS@
+LDLIBS+=@LIBGCRYPT_LIBS@
+
+all: $(BUILD)
+
+clean:
+	rm $(BUILD)
+
+hash:
+

@@ -1,9 +1,12 @@
 AC_INIT
+m4_include([m4/libgcrypt.m4])
 AC_LANG_CPLUSPLUS
 AC_PROG_MAKE_SET
 AC_PROG_CXX
+AM_PATH_LIBGCRYPT
 AC_OUTPUT(Makefile)
 AC_OUTPUT(sys/Makefile)
 AC_OUTPUT(net/Makefile)
 AC_OUTPUT(cmn/Makefile)
+AC_OUTPUT(test/Makefile)
 AC_OUTPUT(config.h)

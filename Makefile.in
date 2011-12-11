@@ -1,4 +1,4 @@
-.PHONY: all clean distclean mostyclean realclean
+.PHONY: all test clean distclean mostyclean realclean
 VPATH=sys:net
 OBJ:=unix_main.o
 
@@ -7,6 +7,7 @@ clean:
 	make -C sys clean
 	make -C net clean
 	make -C cmn clean
+	make -C test clean
 	rm -f *.o
 	rm -f gpl-vote ${OBJ}
 
@@ -30,4 +31,7 @@ net.a: net/*
 
 cmn.a: cmn/*
 	make -C cmn
+
+test:
+	make -C test
 
