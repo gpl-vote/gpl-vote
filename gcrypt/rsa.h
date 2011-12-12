@@ -5,7 +5,8 @@
 #include <stdint.h>
 #include <gcrypt.h>
 
-#include <iostream>
+//#include <iostream>
+#include <stdexcept>
 
 #include "ext/array.h"
 #include "gcrypt/hash.h"
@@ -14,6 +15,8 @@ namespace gcrypt
 {
 namespace rsa
 {
+
+void fingerprint(const gcry_sexp_t& key, int algo, void* dst, size_t size) throw(std::runtime_error,std::invalid_argument);
 
 class key_t
 {
@@ -29,6 +32,13 @@ inline  operator gcry_sexp_t& ()
 inline operator const gcry_sexp_t& () const
     {
     return m_key;
+    }
+template <int algo>
+inline void fingerprint(hash::hash_t<algo>& hash) const throw(std::runtime_error,std::invalid_argument)
+    {
+    const gcry_sexp_t& key( m_key );
+    size_t size = sizeof(typename hash::hash_t<algo>::type) * hash.size();
+    rsa::fingerprint( key, algo, (void*)( &hash ), size );
     }
 };
 
@@ -63,7 +73,6 @@ inline      ~pub_t()
     {
     gcry_sexp_release( m_key );
     }
-
 };
 
 class priv_t:
@@ -71,29 +80,6 @@ class priv_t:
 {
 
 };
-
-template <class hash_t>
-void fingerprint(const key_t& key, hash_t& hash)
-{
-gcry_sexp_t n = gcry_sexp_find_token( key, "n", 1 );
-  if (!n)
-    throw;
-
-size_t datalen;
-const void* data = gcry_sexp_nth_data (n, 1, &datalen);
-  if (!data)
-    {
-      gcry_sexp_release( n );
-      throw;
-    }
-
-hash::make mh;
-mh.enable( hash );
-mh.write( data, datalen );
-mh.read( hash );
-
-gcry_sexp_release( n );
-}
 
 } //namespace rsa
 } //namespace crypt
