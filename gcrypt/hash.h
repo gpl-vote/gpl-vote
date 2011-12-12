@@ -124,7 +124,7 @@ inline  make()
     }
 inline  make(const char* key, size_t size)
     {
-    gcry_error_t err = gcry_md_open( &m_md, GCRY_MD_NONE, 0 );
+    gcry_error_t err = gcry_md_open( &m_md, GCRY_MD_NONE, GCRY_MD_FLAG_HMAC );
     if ( 0 != err )
         {
         throw std::domain_error( "gcry_md_open()" );
