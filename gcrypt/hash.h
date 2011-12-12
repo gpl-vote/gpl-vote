@@ -114,42 +114,42 @@ protected:
 gcry_md_hd_t    m_md;
 
 public:
-inline  make()
+inline  make() throw(std::runtime_error)
     {
     gcry_error_t err = gcry_md_open( &m_md, GCRY_MD_NONE, GCRY_MD_FLAG_SECURE );
     if ( 0 != err )
         {
-        throw std::domain_error( "gcry_md_open()" );
+        throw std::runtime_error( "gcry_md_open()" );
         }
     }
-inline  make(const char* key, size_t size)
+inline  make(const char* key, size_t size) throw(std::runtime_error)
     {
     gcry_error_t err = gcry_md_open( &m_md, GCRY_MD_NONE, GCRY_MD_FLAG_SECURE | GCRY_MD_FLAG_HMAC );
     if ( 0 != err )
         {
-        throw std::domain_error( "gcry_md_open()" );
+        throw std::runtime_error( "gcry_md_open()" );
         }
     err = gcry_md_setkey( m_md, key, size );
     if ( 0 != err )
         {
         gcry_md_close( m_md );
-        throw std::domain_error( "gcry_md_setkey()" );
+        throw std::runtime_error( "gcry_md_setkey()" );
         }
     }
-inline ~make()
+inline ~make() throw()
     {
     gcry_md_close( m_md );
     }
-inline void reset()
+inline void reset() throw()
     {
     gcry_md_reset( m_md );
     }
 template <int algo>
-inline void enable(const hash_t<algo>& hash)
+inline void enable(const hash_t<algo>& hash) throw(std::invalid_argument)
     {
     enable( algo );
     }
-inline void enable(int algo)
+inline void enable(int algo) throw(std::invalid_argument)
     {
     gcry_error_t err = gcry_md_enable( m_md, algo );
     if ( 0 != err )
@@ -157,14 +157,13 @@ inline void enable(int algo)
         throw std::invalid_argument( "gcry_md_enable() unknown md algo" );
         }
     }
-    
-inline void write(const void* data, size_t size)
+inline void write(const void* data, size_t size) throw()
     {
     gcry_md_write( m_md, data, size );
     }
 
 template <int algo>
-inline void read(hash_t<algo>& hash) const
+inline void read(hash_t<algo>& hash) const throw(std::logic_error)
     {
     const void* data = gcry_md_read( m_md, algo );
     if ( NULL == data )
