@@ -1,0 +1,18 @@
+.PHONY: all clean distclean mostyclean realclean
+OBJ:=rsa.o
+
+CXXFLAGS+=-I..
+
+all: ../gcrypt.a
+../gcrypt.a: ${OBJ}
+	ar r ../gcrypt.a ${OBJ}
+
+clean:
+	rm -f ../gcrypt.a ${OBJ}
+
+distclean: clean
+	rm -f Makefile
+
+mostlyclean: distclean
+realclean: distclean
+

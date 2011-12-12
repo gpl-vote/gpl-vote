@@ -2,11 +2,14 @@
 VPATH=sys:net
 OBJ:=unix_main.o
 
+ARLIBS=sys.a net.a cmn.a gcrypt.a
+
 all: gpl-vote
 clean:
 	make -C sys clean
 	make -C net clean
 	make -C cmn clean
+	make -C gcrypt clean
 	make -C test clean
 	rm -f *.o
 	rm -f gpl-vote ${OBJ}
@@ -23,15 +26,9 @@ gpl-vote: ${OBJ} sys.a net.a cmn.a version.o
 version.o: version.cpp info.sh
 	${CXX} ${CXXFLAGS} -D__INFO__="\"`sh info.sh -n`\"" -c -o $@ $<
 
-sys.a:
-	make -C sys
+%.a: $(ARLIBS:%.a=%/*.cpp) $(ARLIBS:%.a=%/*.h) $(ARLIBS:%.a=%/*.inc) 
+	make -C $(@:%.a=%) ../$@
 
-net.a: net/*
-	make -C net
-
-cmn.a: cmn/*
-	make -C cmn
-
-test:
+test: $(ARLIBS)
 	make -C test
 

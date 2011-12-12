@@ -1,13 +1,13 @@
 .PHONY: clean
 
-BUILD=hash
+BUILD=hash fingerprint
 CXXFLAGS+=-I.. @LIBGCRYPT_CFLAGS@
-LDLIBS+=@LIBGCRYPT_LIBS@
+LDLIBS+=@LIBGCRYPT_LIBS@ ../gcrypt.a
 
 all: $(BUILD)
 
 clean:
 	rm -f $(BUILD)
 
-hash:
+fingerprint: ../gcrypt.a
 
