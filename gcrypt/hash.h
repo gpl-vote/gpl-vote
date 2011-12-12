@@ -165,12 +165,16 @@ inline void write(const void* data, size_t size) throw()
 template <int algo>
 inline void read(hash_t<algo>& hash) const throw(std::logic_error)
     {
+    read( algo, &hash, hash.size() * sizeof(typename hash_t<algo>::type) );
+    }
+inline void read(int algo, void* dst, size_t size) const throw(std::logic_error)
+    {
     const void* data = gcry_md_read( m_md, algo );
     if ( NULL == data )
         {
         throw std::logic_error( "gcry_md_read() algo not enabled" );
         }
-    memcpy( &hash, data, hash.size() * sizeof(typename hash_t<algo>::type) );
+    memcpy( dst, data, size );
     }
 };
 
