@@ -7,6 +7,8 @@
 #include "sys/main.h"
 #include "version.h"
 
+#include "cmn/pthread_cpu_time.h"
+
 static void help(std::ostream& out, int argc, char* argv[])
 {
 out << "usage: " << argv[0] << " <config file name>" << std::endl;
@@ -22,6 +24,7 @@ static const struct option long_options[] = {
 
 int main(int argc, char* argv[])
 {
+timespec tbegin = get_pthread_time_mark();
 bool demonize = false;
 int option_index = 0;
 while ( true )
@@ -63,6 +66,8 @@ if ( !result || !cfg )
     std::cerr << "invalid config file" << std::endl;
     return EXIT_FAILURE;
     }
+
+std::cerr << get_time_diff_nsec(tbegin, get_pthread_time_mark()) << std::endl;
 
 try
     {
