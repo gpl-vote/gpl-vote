@@ -1,6 +1,7 @@
 .PHONY: all clean distclean mostyclean realclean
 VPATH=sys:net
 OBJ:=unix_main.o
+LDLIBS+=-lrt
 
 all: gpl-vote
 clean:
@@ -17,7 +18,7 @@ mostlyclean: distclean
 realclean: distclean
 
 gpl-vote: ${OBJ} sys.a net.a cmn.a version.o
-	${CXX} ${CXXFLAGS} ${LDFLAGS} ${LIBS} $? -o $@
+	${CXX} ${CXXFLAGS} ${LDFLAGS} ${LIBS}   $?   ${LDLIBS} -o $@ 
 
 version.o: version.cpp info.sh
 	${CXX} ${CXXFLAGS} -D__INFO__="\"`sh info.sh -n`\"" -c -o $@ $<

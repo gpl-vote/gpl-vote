@@ -2,6 +2,7 @@ AC_INIT
 AC_LANG_CPLUSPLUS
 AC_PROG_MAKE_SET
 AC_PROG_CXX
+AC_CHECK_LIB(rt, clock_gettime, pthread_getcpuclockid)
 AC_OUTPUT(Makefile)
 AC_OUTPUT(sys/Makefile)
 AC_OUTPUT(net/Makefile)
