@@ -2,6 +2,7 @@
 VPATH=sys:net
 OBJ:=unix_main.o
 LDLIBS+=-lrt
+CXXFLAGS+=-D_DEBUG_
 
 all: gpl-vote
 clean:
