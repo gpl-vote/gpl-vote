@@ -118,7 +118,7 @@ if ( !opt_config_name || NULL == config_name )
     }
 
 pugi::xml_document cfgfile;
-pugi::xml_parse_result result = cfgfile.load_file( argv[optind] );
+pugi::xml_parse_result result = cfgfile.load_file( config_name );
 pugi::xml_node cfg = cfgfile.first_child();
 if ( !result || !cfg )
     {
