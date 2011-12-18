@@ -1,6 +1,7 @@
 .PHONY: all clean distclean mostyclean realclean
 VPATH=sys:net
 OBJ:=unix_main.o
+CXXFLAGS+=-D_DEBUG_
 
 all: gpl-vote
 clean:
