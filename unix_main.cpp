@@ -67,7 +67,7 @@ if ( !result || !cfg )
     return EXIT_FAILURE;
     }
 
-std::cerr << get_time_diff_nsec(tbegin, get_pthread_time_mark()) << std::endl;
+std::cerr << "Time used for getopt (just test): " << get_time_diff_nsec(tbegin, get_pthread_time_mark()) << " nsec" << std::endl;
 
 try
     {
