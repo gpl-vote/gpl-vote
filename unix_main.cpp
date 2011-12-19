@@ -93,6 +93,16 @@ while ( true )
         }
     }
 
+while (optind < argc)
+{
+#ifdef _DEBUG_    
+    std::cerr << optind << "\t" << argv[optind] << std::endl;
+#endif
+    opt_config_name = 1;
+    config_name = argv[optind++];
+}        
+
+
 #ifdef _DEBUG_
 std::cerr <<    " help=" << opt_help << " version=" << opt_version << " demonize=" << opt_demonize << " conf_name=" << opt_config_name << " default=" << opt_default;
 if (config_name != NULL) std::cerr << " name=" << config_name;
